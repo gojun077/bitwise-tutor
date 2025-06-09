@@ -13,7 +13,7 @@ SRCREGEX = *.c
 # -fsanitize=address Use AddressSanitizer (part of GCC since 4.8)
 .PHONY: all check-syntax clean cleanall test
 
-all: $(BINDIR) bitwise_operators
+all: $(BINDIR) bitwise_operators bwt
 
 
 $(BINDIR):
