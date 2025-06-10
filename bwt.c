@@ -276,8 +276,10 @@ int binary_to_int(const char* binary_str) {
  */
 void run_bitwise_and_quiz(void) {
     // Generate two random 8-bit integers
-    int8_t a = rand() % 16;  // Small values for easier understanding
-    int8_t b = rand() % 16;
+    //int8_t a = rand() % 16;  // Small values for easier understanding
+    //int8_t b = rand() % 16;
+    int8_t a = rand();
+    int8_t b = rand();
 
     char* a_bin = int8_to_binary(a);
     char* b_bin = int8_to_binary(b);
