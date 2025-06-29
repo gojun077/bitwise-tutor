@@ -863,6 +863,118 @@ void run_binary_decimal_conversion_quiz(void) {
 }
 
 /**
+ * Run a quiz on bitwise shift operations (left-shift << and right-shift >>)
+ */
+void run_shift_quiz(void) {
+    // Generate a small random unsigned 8-bit integer
+    uint8_t a = rand() % 128; // keep it in 7 bits for easy observation
+    uint8_t left_amt = 1 + rand() % 3; // left shift by 1, 2 or 3
+    uint8_t right_amt = 1 + rand() % 3; // right shift by 1, 2 or 3
+
+    char* a_bin = uint8_to_binary(a);
+
+    printf("\nThe following questions are about shifting unsigned 8-bit integer a bitwise.\n");
+    printf("Given a = %u\n", a);
+
+    // Q1: What is the binary representation of a?
+    printf("Q1: What is the binary representation of %u?\n", a);
+    char user_input[100];
+    bool correct = false;
+    while (!correct) {
+        if (get_binary_input(user_input, sizeof(user_input), 8)) {
+            if (strcmp(user_input, a_bin) == 0) {
+                printf("Correct!\n\n");
+                correct = true;
+            } else {
+                printf("Sorry, that is incorrect! Please try again\n\n");
+            }
+        } else {
+            printf("Invalid input. Please enter an 8-bit binary number.\n\n");
+        }
+    }
+
+    // Q2: What is the result of a << left_amt in binary?
+    uint8_t left_val = a << left_amt;
+    char* left_bin = uint8_to_binary(left_val);
+    printf("Q2: What is the binary result of a << %u?\n", left_amt);
+    correct = false;
+    while (!correct) {
+        if (get_binary_input(user_input, sizeof(user_input), 8)) {
+            if (strcmp(user_input, left_bin) == 0) {
+                printf("Correct!\n\n");
+                correct = true;
+            } else {
+                printf("Sorry, that is incorrect! Please try again\n\n");
+            }
+        } else {
+            printf("Invalid input. Please enter an 8-bit binary number.\n\n");
+        }
+    }
+
+    // Q3: What is the decimal result of a << left_amt?
+    printf("Q3: What is the decimal result of a << %u?\n", left_amt);
+    int user_dec;
+    correct = false;
+    while (!correct) {
+        printf(">>> ");
+        if (scanf("%d", &user_dec) == 1) {
+            if ((uint8_t)user_dec == left_val) {
+                printf("Correct!\n\n");
+                correct = true;
+            } else {
+                printf("Sorry, that is incorrect! Please try again\n\n");
+            }
+        } else {
+            printf("Invalid input. Please enter a decimal number.\n\n");
+            clear_input_buffer();
+        }
+    }
+
+    // Q4: What is the result of a >> right_amt in binary?
+    uint8_t right_val = a >> right_amt;
+    char* right_bin = uint8_to_binary(right_val);
+    printf("Q4: What is the binary result of a >> %u?\n", right_amt);
+    clear_input_buffer();
+    correct = false;
+    while (!correct) {
+        if (get_binary_input(user_input, sizeof(user_input), 8)) {
+            if (strcmp(user_input, right_bin) == 0) {
+                printf("Correct!\n\n");
+                correct = true;
+            } else {
+                printf("Sorry, that is incorrect! Please try again\n\n");
+            }
+        } else {
+            printf("Invalid input. Please enter an 8-bit binary number.\n\n");
+        }
+    }
+
+    // Q5: What is the decimal result of a >> right_amt?
+    printf("Q5: What is the decimal result of a >> %u?\n", right_amt);
+    correct = false;
+    while (!correct) {
+        printf(">>> ");
+        if (scanf("%d", &user_dec) == 1) {
+            if ((uint8_t)user_dec == right_val) {
+                printf("Correct!\n\n");
+                correct = true;
+            } else {
+                printf("Sorry, that is incorrect! Please try again\n\n");
+            }
+        } else {
+            printf("Invalid input. Please enter a decimal number.\n\n");
+            clear_input_buffer();
+        }
+    }
+
+    free_if_not_null(a_bin);
+    free_if_not_null(left_bin);
+    free_if_not_null(right_bin);
+    clear_input_buffer();
+}
+
+
+/**
  * Main function
  */
 int main(void) {
@@ -922,8 +1034,9 @@ int main(void) {
         printf("2. Bitwise quiz (binary values given)\n");
         printf("3. Bitwise NOT quiz (signed vs unsigned)\n");
         printf("4. Binary <--> decimal conversions\n");
-        printf("5. Exit\n");
-        printf("Enter your choice (1-5): ");
+        printf("5. Bit-shift operations quiz\n");
+        printf("6. Exit\n");
+        printf("Enter your choice (1-6): ");
 
         if (scanf("%d", &choice) != 1) {
             printf("Invalid input. Please enter a number.\n");
@@ -947,6 +1060,9 @@ int main(void) {
                 run_binary_decimal_conversion_quiz();
                 break;
             case 5:
+                run_shift_quiz();
+                break;
+            case 6:
                 printf("Thank you for using Bitwise Tutor. Goodbye!\n");
                 running = false;
                 break;
