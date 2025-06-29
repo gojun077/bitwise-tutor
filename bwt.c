@@ -467,6 +467,103 @@ void run_bitwise_xor_quiz(void) {
     free_if_not_null(result_bin);
     clear_input_buffer();
 }
+/**
+ * Run a quiz on bitwise OR operation
+ */
+void run_bitwise_or_quiz(void) {
+    // Generate two random 8-bit integers
+    int8_t a = rand();
+    int8_t b = rand();
+
+    char* a_bin = int8_to_binary(a);
+    char* b_bin = int8_to_binary(b);
+    char* result_bin = int8_to_binary(a | b);
+
+    // Quiz: Decimal to Binary
+    printf("\nThe following questions are about signed 8-bit integers *a* and *b*.\n");
+    printf("Given `a=%d` and `b=%d`,\n\n", a, b);
+
+    // Question 1: Binary representation of a
+    printf("Q1: What is the binary representation of `%d`?\n", a);
+
+    char user_input[100];
+    bool correct = false;
+
+    while (!correct) {
+        if (get_binary_input(user_input, sizeof(user_input), 8)) {
+            if (strcmp(user_input, a_bin) == 0) {
+                printf("Correct!\n\n");
+                correct = true;
+            } else {
+                printf("Sorry, that is incorrect! Please try again\n\n");
+            }
+        } else {
+            printf("Invalid input. Please enter an 8-bit binary number.\n\n");
+        }
+    }
+
+    // Question 2: Binary representation of b
+    printf("Q2: What is the binary representation of `%d`?\n", b);
+
+    correct = false;
+    while (!correct) {
+        if (get_binary_input(user_input, sizeof(user_input), 8)) {
+            if (strcmp(user_input, b_bin) == 0) {
+                printf("Correct!\n\n");
+                correct = true;
+            } else {
+                printf("Sorry, that is incorrect! Please try again\n\n");
+            }
+        } else {
+            printf("Invalid input. Please enter an 8-bit binary number.\n\n");
+        }
+    }
+
+    // Question 3: Result of a|b in binary
+    printf("Q3: What is the result of `a|b` in binary?\n");
+
+    correct = false;
+    while (!correct) {
+        if (get_binary_input(user_input, sizeof(user_input), 8)) {
+            if (strcmp(user_input, result_bin) == 0) {
+                printf("Correct!\n\n");
+                correct = true;
+            } else {
+                printf("Sorry, that is incorrect! Please try again\n\n");
+            }
+        } else {
+            printf("Invalid input. Please enter an 8-bit binary number.\n\n");
+        }
+    }
+
+    // Question 4: Result of a|b in decimal
+    printf("Q4: What is the result of `a|b` in decimal?\n");
+
+    int result_dec = a | b;
+    int user_dec;
+
+    correct = false;
+    while (!correct) {
+        printf(">>> ");
+        if (scanf("%d", &user_dec) == 1) {
+            if (user_dec == result_dec) {
+                printf("Correct!\n\n");
+                correct = true;
+            } else {
+                printf("Sorry, that is incorrect! Please try again\n\n");
+            }
+        } else {
+            printf("Invalid input. Please enter a decimal number.\n\n");
+            clear_input_buffer();
+        }
+    }
+
+    // Clean up
+    free_if_not_null(a_bin);
+    free_if_not_null(b_bin);
+    free_if_not_null(result_bin);
+    clear_input_buffer();
+}
 
 /**
  * Run a quiz with binary values first
@@ -1130,11 +1227,12 @@ printf("\nChoose a quiz type:\n");
         printf("1. Bitwise AND quiz (decimal values given)\n");
         printf("2. Bitwise quiz (binary values given)\n");
         printf("3. Bitwise XOR quiz (decimal values given)\n");
-        printf("4. Bitwise NOT quiz (signed vs unsigned)\n");
-        printf("5. Binary <--> decimal conversions\n");
-        printf("6. Bit-shift operations quiz\n");
-        printf("7. Exit\n");
-        printf("Enter your choice (1-7): ");
+        printf("4. Bitwise OR quiz (decimal values given)\n");
+        printf("5. Bitwise NOT quiz (signed vs unsigned)\n");
+        printf("6. Binary <--> decimal conversions\n");
+        printf("7. Bit-shift operations quiz\n");
+        printf("8. Exit\n");
+        printf("Enter your choice (1-8): ");
 
         if (scanf("%d", &choice) != 1) {
             printf("Invalid input. Please enter a number.\n");
@@ -1155,15 +1253,18 @@ switch (choice) {
             run_bitwise_xor_quiz();
             break;
         case 4:
-            run_bitwise_not_quiz();
+            run_bitwise_or_quiz();
             break;
         case 5:
-            run_binary_decimal_conversion_quiz();
+            run_bitwise_not_quiz();
             break;
         case 6:
-            run_shift_quiz();
-break;
+            run_binary_decimal_conversion_quiz();
+            break;
         case 7:
+            run_shift_quiz();
+            break;
+        case 8:
             printf("Thank you for using Bitwise Tutor. Goodbye!\n");
             running = false;
             break;
